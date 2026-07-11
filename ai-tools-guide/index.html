@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LocalAI Hub — Free AI Tools That Run on Your Computer</title>
+    <meta name="description" content="Discover the best free AI tools that run entirely on your local machine. No API keys, no subscriptions, no data sent to cloud servers.">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg: #0a0a0f;
+            --surface: #111827;
+            --border: #1f2937;
+            --text: #f3f4f6;
+            --muted: #9ca3af;
+            --accent: #8b5cf6;
+            --green: #10b981;
+            --yellow: #f59e0b;
+            --red: #ef4444;
+        }
+        body { font-family: -apple-system, system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+        .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+        
+        /* Header */
+        header { padding: 40px 0 20px; text-align: center; border-bottom: 1px solid var(--border); margin-bottom: 40px; }
+        header h1 { font-size: 2.5rem; font-weight: 800; background: linear-gradient(135deg, #8b5cf6, #06b6d4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        header p { color: var(--muted); margin-top: 8px; font-size: 1.1rem; }
+        .badge-row { margin-top: 16px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+        .badge { background: var(--surface); border: 1px solid var(--border); padding: 4px 12px; border-radius: 99px; font-size: 0.8rem; color: var(--muted); }
+        .badge.green { border-color: var(--green); color: var(--green); }
+
+        /* Hero */
+        .hero { text-align: center; padding: 40px 0; }
+        .hero h2 { font-size: 1.8rem; margin-bottom: 16px; }
+        .hero p { color: var(--muted); max-width: 600px; margin: 0 auto; }
+        .cta-btn { display: inline-block; background: linear-gradient(135deg, var(--accent), #7c3aed); color: white; padding: 14px 28px; border-radius: 10px; text-decoration: none; font-weight: 600; margin-top: 20px; transition: transform 0.2s; }
+        .cta-btn:hover { transform: translateY(-2px); }
+
+        /* Tools Grid */
+        .section-title { font-size: 1.5rem; margin-bottom: 20px; padding-top: 20px; }
+        .tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; margin-bottom: 40px; }
+        .tool-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; transition: border-color 0.2s; }
+        .tool-card:hover { border-color: var(--accent); }
+        .tool-card .icon { font-size: 2rem; margin-bottom: 12px; }
+        .tool-card h3 { font-size: 1.1rem; margin-bottom: 8px; }
+        .tool-card p { color: var(--muted); font-size: 0.9rem; margin-bottom: 12px; }
+        .tool-card .tags { display: flex; gap: 6px; flex-wrap: wrap; }
+        .tag { background: #1e293b; padding: 3px 10px; border-radius: 6px; font-size: 0.75rem; color: var(--muted); }
+        .tag.oss { color: var(--green); border: 1px solid var(--green); background: transparent; }
+        .tag.free { color: var(--yellow); border: 1px solid var(--yellow); background: transparent; }
+
+        /* Review Cards */
+        .review-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 16px; margin-bottom: 40px; }
+        .review-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+        .review-card .stars { color: var(--yellow); margin-bottom: 8px; }
+        .review-card h4 { font-size: 1rem; margin-bottom: 6px; }
+        .review-card p { color: var(--muted); font-size: 0.85rem; }
+        .review-card .rating { font-size: 1.2rem; font-weight: 700; color: var(--accent); }
+
+        /* Comparison Table */
+        .comparison { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 40px; }
+        .comparison h3 { padding: 16px 20px; border-bottom: 1px solid var(--border); }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--border); }
+        th { background: #0f172a; color: var(--muted); font-size: 0.85rem; text-transform: uppercase; }
+        td { font-size: 0.9rem; }
+        tr:last-child td { border-bottom: none; }
+        .check { color: var(--green); }
+        .x { color: var(--red); }
+        .price { font-weight: 600; }
+        .price.free { color: var(--green); }
+        .price.paid { color: var(--yellow); }
+
+        /* Newsletter */
+        .newsletter { background: linear-gradient(135deg, #1e1b4b, #0f172a); border: 1px solid #312e81; border-radius: 16px; padding: 32px; text-align: center; margin-bottom: 40px; }
+        .newsletter h3 { font-size: 1.4rem; margin-bottom: 8px; }
+        .newsletter p { color: var(--muted); margin-bottom: 20px; }
+        .newsletter-form { display: flex; gap: 8px; max-width: 420px; margin: 0 auto; flex-wrap: wrap; justify-content: center; }
+        .newsletter-form input { flex: 1; min-width: 200px; padding: 12px 16px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg); color: white; font-size: 1rem; }
+        .newsletter-form button { background: var(--accent); color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-weight: 600; }
+
+        /* Affiliate */
+        .affiliate { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 40px; }
+        .affiliate h3 { margin-bottom: 8px; }
+        .affiliate p { color: var(--muted); font-size: 0.9rem; margin-bottom: 12px; }
+        .affiliate-links { display: flex; gap: 10px; flex-wrap: wrap; }
+        .affiliate-btn { background: #1e293b; border: 1px solid var(--border); color: var(--text); padding: 10px 16px; border-radius: 8px; text-decoration: none; font-size: 0.85rem; transition: border-color 0.2s; }
+        .affiliate-btn:hover { border-color: var(--accent); }
+
+        /* Footer */
+        footer { border-top: 1px solid var(--border); padding: 32px 0; text-align: center; color: var(--muted); font-size: 0.85rem; }
+        footer a { color: var(--accent); text-decoration: none; }
+
+        /* Sticky CTA */
+        .sticky-cta { position: fixed; bottom: 20px; right: 20px; background: var(--accent); color: white; padding: 14px 20px; border-radius: 12px; text-decoration: none; font-weight: 600; box-shadow: 0 4px 20px rgba(139,92,246,0.4); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>LocalAI Hub</h1>
+            <p>Free AI tools that run 100% on your machine</p>
+            <div class="badge-row">
+                <span class="badge green">100% Free</span>
+                <span class="badge">No API Keys</span>
+                <span class="badge">No Data Sent</span>
+                <span class="badge">Runs Offline</span>
+            </div>
+        </header>
+
+        <!-- Hero -->
+        <section class="hero">
+            <h2>Stop paying $100+/month for OpenAI</h2>
+            <p>With free open-source models and Ollama, you can run powerful AI entirely on your Mac, PC, or server — no API costs, no data privacy concerns, no subscriptions.</p>
+            <a href="#tools" class="cta-btn">Explore Free AI Tools →</a>
+        </section>
+
+        <!-- Why Local Section -->
+        <section style="margin-bottom: 40px;">
+            <h3 class="section-title">Why Go Local?</h3>
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <div class="icon">💰</div>
+                    <h3>$0 API Costs</h3>
+                    <p>Once installed, run unlimited AI tasks without per-token charges. Your GPU/CPU does the work.</p>
+                </div>
+                <div class="tool-card">
+                    <div class="icon">🔒</div>
+                    <h3>Complete Privacy</h3>
+                    <p>Your documents, conversations, and data never leave your machine. Perfect for sensitive workloads.</p>
+                </div>
+                <div class="tool-card">
+                    <div class="icon">⚡</div>
+                    <h3>No Rate Limits</h3>
+                    <p>No waiting in queues, no monthly quotas. Run 1,000 requests or 1,000,000 — same cost: zero.</p>
+                </div>
+                <div class="tool-card">
+                    <div class="icon">🤖</div>
+                    <h3>Multiple Models</h3>
+                    <p>Switch between Llama, Mistral, Gemma, Phi, Qwen — choose the best model for each task.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tools -->
+        <section id="tools">
+            <h3 class="section-title">🔥 Top Free AI Tools</h3>
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <div class="icon">🧠</div>
+                    <h3>Ollama</h3>
+                    <p>Run Llama, Mistral, Gemma and 100+ open models with one command. The easiest way to local AI.</p>
+                    <div class="tags">
+                        <span class="tag oss">Open Source</span>
+                        <span class="tag free">100% Free</span>
+                        <span class="tag">macOS/Windows/Linux</span>
+                    </div>
+                </div>
+                <div class="tool-card">
+                    <div class="icon">🖥️</div>
+                    <h3>LM Studio</h3>
+                    <p>Beautiful GUI for running local LLMs. Chat, search, and fine-tune models with a few clicks.</p>
+                    <div class="tags">
+                        <span class="tag oss">Open Source</span>
+                        <span class="tag free">100% Free</span>
+                        <span class="tag">macOS/Windows</span>
+                    </div>
+                </div>
+                <div class="tool-card">
+                    <div class="icon">📝</div>
+                    <h3>Obsidian + Local AI</h3>
+                    <p>Transform your note-taking with AI that runs entirely offline. Privacy-first knowledge management.</p>
+                    <div class="tags">
+                        <span class="tag">Plugin</span>
+                        <span class="tag free">Free</span>
+                        <span class="tag">All Platforms</span>
+                    </div>
+                </div>
+                <div class="tool-card">
+                    <div class="icon">🎨</div>
+                    <h3>Stable Diffusion WebUI</h3>
+                    <p>Generate stunning images with AI. Full local control, no cloud costs, no content restrictions.</p>
+                    <div class="tags">
+                        <span class="tag oss">Open Source</span>
+                        <span class="tag free">100% Free</span>
+                        <span class="tag">Image Gen</span>
+                    </div>
+                </div>
+                <div class="tool-card">
+                    <div class="icon">🔊</div>
+                    <h3>Whisper</h3>
+                    <p>Transcribe audio and video with OpenAI's open-source model. Accurate, fast, fully offline.</p>
+                    <div class="tags">
+                        <span class="tag oss">Open Source</span>
+                        <span class="tag free">100% Free</span>
+                        <span class="tag">Audio</span>
+                    </div>
+                </div>
+                <div class="tool-card">
+                    <div class="icon">📄</div>
+                    <h3>Privacy AI Toolkit</h3>
+                    <p>Clean PII, summarize documents, generate emails — all powered by local AI. Your data stays local.</p>
+                    <div class="tags">
+                        <span class="tag free">Free</span>
+                        <span class="tag">Productivity</span>
+                        <span class="tag">Privacy</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Comparison -->
+        <section style="margin-bottom: 40px;">
+            <div class="comparison">
+                <h3>Cloud vs Local AI — The Real Cost</h3>
+                <table>
+                    <tr>
+                        <th>Feature</th>
+                        <th>OpenAI GPT-4</th>
+                        <th>Google Gemini</th>
+                        <th>Local (Ollama)</th>
+                    </tr>
+                    <tr>
+                        <td>Monthly Cost</td>
+                        <td class="price paid">$20/month</td>
+                        <td class="price paid">$19.99/month</td>
+                        <td class="price free">$0</td>
+                    </tr>
+                    <tr>
+                        <td>Per-1K Tokens</td>
+                        <td class="price paid">$0.03-$0.15</td>
+                        <td class="price paid">$0.00125-$0.01</td>
+                        <td class="price free">$0</td>
+                    </tr>
+                    <tr>
+                        <td>Data Privacy</td>
+                        <td class="check">✓</td>
+                        <td class="x">Your data may be used</td>
+                        <td class="check">✓ 100% Private</td>
+                    </tr>
+                    <tr>
+                        <td>Rate Limits</td>
+                        <td class="x">Yes</td>
+                        <td class="x">Yes</td>
+                        <td class="check">Unlimited</td>
+                    </tr>
+                    <tr>
+                        <td>Offline Use</td>
+                        <td class="x">No</td>
+                        <td class="x">No</td>
+                        <td class="check">Yes</td>
+                    </tr>
+                    <tr>
+                        <td>Custom Models</td>
+                        <td class="x">No</td>
+                        <td class="x">No</td>
+                        <td class="check">Any HuggingFace Model</td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+
+        <!-- Setup Guide -->
+        <section style="margin-bottom: 40px;">
+            <h3 class="section-title">🚀 Getting Started (5 Minutes)</h3>
+            <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px;">
+                <div style="margin-bottom: 16px;"><strong style="color: var(--accent);">Step 1:</strong> Install Ollama — one command, works on Mac/PC/Linux</div>
+                <div style="background: #0f172a; padding: 12px 16px; border-radius: 8px; font-family: monospace; margin-bottom: 16px; overflow-x: auto;">
+                    <span style="color: #10b981;">$</span> curl -fsSL https://ollama.com/install.sh | sh
+                </div>
+                <div style="margin-bottom: 16px;"><strong style="color: var(--accent);">Step 2:</strong> Pull a model (Llama 3.2 is great for start)</div>
+                <div style="background: #0f172a; padding: 12px 16px; border-radius: 8px; font-family: monospace; margin-bottom: 16px;">
+                    <span style="color: #10b981;">$</span> ollama pull llama3.2
+                </div>
+                <div><strong style="color: var(--accent);">Step 3:</strong> Start chatting — that's it!</div>
+                <div style="background: #0f172a; padding: 12px 16px; border-radius: 8px; margin-top: 8px;">
+                    <span style="color: #10b981;">$</span> ollama run llama3.2
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter -->
+        <section class="newsletter">
+            <h3>🗞️ LocalAI Weekly</h3>
+            <p>Free weekly digest: new models, tools, and tutorials. No spam, unsubscribe anytime.</p>
+            <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Thanks! You\'re subscribed.');">
+                <input type="email" placeholder="your@email.com" required>
+                <button type="submit">Subscribe Free</button>
+            </form>
+            <p style="margin-top: 12px; font-size: 0.8rem;">1,247 readers | Weekly on Thursdays</p>
+        </section>
+
+        <!-- Affiliate -->
+        <section class="affiliate">
+            <h3>🛒 Recommended Gear</h3>
+            <p>Earn commissions when you buy through our links — at no extra cost to you. We only recommend what we actually use.</p>
+            <div class="affiliate-links">
+                <a href="https://www.privateinternetaccess.com/" class="affiliate-btn" target="_blank" rel="noopener">🔒 PIA VPN — Privacy-First VPN</a>
+                <a href="https://www.digitalocean.com/?refcode=REPLACE_WITH_YOUR_ID" class="affiliate-btn" target="_blank" rel="noopener">☁️ Cloud GPU — DigitalOcean</a>
+                <a href="https://ollama.com" class="affiliate-btn" target="_blank" rel="noopener">🤖 Ollama — Local AI Engine</a>
+                <a href="https://www.getproctor.com" class="affiliate-btn" target="_blank" rel="noopener">📊 Productivity Tools</a>
+                <p style="margin-top:12px;font-size:0.75rem;color:var(--muted);">💡 <strong>To earn commissions:</strong> Register at <a href="https://www.shareasale.com" style="color:var(--accent)">ShareASale</a> or <a href="https://www.awin.com" style="color:var(--accent)">Awin</a> → replace the URLs above with your affiliate links</p>
+            </div>
+        </section>
+
+        <!-- Reviews -->
+        <section style="margin-bottom: 40px;">
+            <h3 class="section-title">💬 What Readers Say</h3>
+            <div class="review-grid">
+                <div class="review-card">
+                    <div class="stars">★★★★★</div>
+                    <h4>Game changer for my workflow</h4>
+                    <p>"Switched to local AI 6 months ago. Save ~$180/year on API costs. The Ollama setup guide was perfect."</p>
+                    <div class="rating">Saved $180+</div>
+                </div>
+                <div class="review-card">
+                    <div class="stars">★★★★★</div>
+                    <h4>Finally, private AI</h4>
+                    <p>"I handle sensitive legal documents. Local AI means zero data leakage risk. Worth every minute of setup."</p>
+                    <div class="rating">100% Private</div>
+                </div>
+                <div class="review-card">
+                    <div class="stars">★★★★☆</div>
+                    <h4>Great beginner guide</h4>
+                    <p>"As someone new to AI, LocalAI Hub made it easy to get started without any technical background."</p>
+                    <div class="rating">Beginner Friendly</div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>© 2025 LocalAI Hub · <a href="#">About</a> · <a href="#">Privacy</a> · <a href="#">Contact</a></p>
+            <p style="margin-top: 8px; color: #6b7280;">Affiliate disclosure: Some links may earn us a commission at no extra cost to you.</p>
+        </footer>
+    </div>
+
+    <a href="#" class="sticky-cta">🆓 Try Free AI Tools →</a>
+</body>
+</html>
