@@ -1,0 +1,19 @@
+name: Deploy PrivacyAI Toolkit
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install fastapi uvicorn httpx python-multipart
+      - run: uvicorn app.main:app --host 0.0.0.0 --port 8000 &
+      - run: sleep 3 && curl http://localhost:8000/api/health
